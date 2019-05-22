@@ -25,9 +25,13 @@ public class SeleniumClass {
 		try {
 			//Thread.sleep(5000);
 			//System.out.print(driver);
-			driver.findElement(By.xpath("//*[@id=\"tsf\"]/div[2]/div/div[1]/div/div[1]/input")).sendKeys("Seba Hueco");
-			driver.findElement(By.name("f")).submit();
-			driver.navigate().to("https://www.bancoestado.cl/imagenes/_personas/home/default.asp");
+			//driver.findElement(By.xpath("//*[@id=\"tsf\"]/div[2]/div/div[1]/div/div[1]/input")).sendKeys("Seba Hueco");
+			//driver.findElement(By.name("f")).submit();
+			driver.findElement(By.xpath("//*[@id=\"gb_70\"]")).click();
+			driver.findElement(By.xpath("//*[@id=\"identifierId\"]")).sendKeys("edu.gutierrez.valdes@gmail.com");
+			driver.findElement(By.xpath("//*[@id=\"identifierNext\"]/content/span")).click();
+
+			//driver.findElement(By.xpath("//*[@id=\"passwordNext\"]/content/span")).click();
 		} catch (Exception e) {
 			System.out.print(e);
 		}

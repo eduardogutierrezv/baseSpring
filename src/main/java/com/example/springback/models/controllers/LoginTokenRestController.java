@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.springback.clasesolas.SeguridadPass;
 import com.example.springback.jwtconfigure.model.JwtUser;
 import com.example.springback.jwtconfigure.seguridad.JwtGenerator;
-import com.example.springback.models.entity.SeguridadPass;
 import com.example.springback.models.entity.Token;
 import com.example.springback.models.entity.Usuario;
 import com.example.springback.models.service.ITokenServiceBd;
@@ -21,7 +21,7 @@ import com.example.springback.models.service.IUsuarioService;
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/login")
-public class TokenRestController {
+public class LoginTokenRestController {
 	
 	private JwtGenerator jwtgenerator;
 	
@@ -34,7 +34,7 @@ public class TokenRestController {
 	private ITokenServiceBd itokenservicebd;
 	
 	
-	 public TokenRestController(JwtGenerator jwtgenerator) {
+	 public LoginTokenRestController(JwtGenerator jwtgenerator) {
 		this.jwtgenerator = jwtgenerator;
 	}
 	 	@PostMapping

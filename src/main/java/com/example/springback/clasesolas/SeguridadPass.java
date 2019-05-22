@@ -1,4 +1,4 @@
-package com.example.springback.models.entity;
+package com.example.springback.clasesolas;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -27,7 +27,4 @@ public class SeguridadPass {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); // CREAMOS LA VARIABLE BCRYPT
 		return passwordEncoder.matches(passwordSin, passEncriptado); // DEVOLVEMOS EL POUND SI ES VERDADERO
 		}
-	
-	
-	
 }

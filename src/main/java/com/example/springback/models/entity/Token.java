@@ -1,7 +1,6 @@
 package com.example.springback.models.entity;
 
 import java.io.Serializable;
-import java.util.Map;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -17,6 +16,11 @@ import javax.persistence.Table;
 @Table(name = "tokens")
 public class Token implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_token")
