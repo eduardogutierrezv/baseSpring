@@ -15,9 +15,8 @@ import com.example.springback.jwtconfigure.model.JwtUser;
 import com.example.springback.jwtconfigure.model.JwtUserDetails;
 
 @Component
-public class JwtAuthenticationProvider extends AbstractUserDetailsAuthenticationProvider{
-	
-	
+public class JwtAuthenticationProvider extends AbstractUserDetailsAuthenticationProvider {
+
 	@Autowired
 	private JwtValidator validator;
 
@@ -30,24 +29,26 @@ public class JwtAuthenticationProvider extends AbstractUserDetailsAuthentication
 	protected void additionalAuthenticationChecks(UserDetails userDetails,
 			UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	protected UserDetails retrieveUser(String username, UsernamePasswordAuthenticationToken authentication)
 			throws AuthenticationException {
-		
-			JwtAuthenticationToken jwtAuthenticationToken = (JwtAuthenticationToken) authentication;
-			String token = jwtAuthenticationToken.getToken();
-		
-			JwtUser jwtUser = validator.validate(token);
-		
-		if(jwtUser == null) {
+
+		JwtAuthenticationToken jwtAuthenticationToken = (JwtAuthenticationToken) authentication;
+		String token = jwtAuthenticationToken.getToken();
+
+		JwtUser jwtUser = validator.validate(token);
+
+		if (jwtUser == null) {
+			System.err.println(jwtUser);
 			throw new RuntimeException("JWT token es incorrecto");
 		}
-		List<GrantedAuthority> grantedAuthorities = AuthorityUtils.commaSeparatedStringToAuthorityList(jwtUser.getRole());
+		List<GrantedAuthority> grantedAuthorities = AuthorityUtils
+				.commaSeparatedStringToAuthorityList(jwtUser.getRole());
 		return new JwtUserDetails(jwtUser.getUsername(), jwtUser.getPassword(), token, grantedAuthorities);
-		
+
 	}
 
 }

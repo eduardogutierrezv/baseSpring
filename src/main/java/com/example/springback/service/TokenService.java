@@ -47,7 +47,7 @@ public class TokenService {
 			JwtUser jwtUserToken = new JwtUser();
 			jwtUserToken.setUsername(email);
 			jwtUserToken.setPassword(userBd.getPassword());
-			jwtUserToken.setRole("admin");
+			jwtUserToken.setRole("nada");
 
 			code = "200";
 			token = jwtgenerator.generate(jwtUserToken); // GENERAMOS TOKEN

@@ -14,13 +14,13 @@ import com.example.springback.vo.TokenReqVO;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/api")
+@RequestMapping(value = "/login")
 public class TokenRestController {
 
 	@Autowired
 	private TokenService tokenService;
 
-	@PostMapping(value = "/login")
+	@PostMapping
 	public Map<String, Object> login_primario(@RequestBody TokenReqVO userLogin) { // TRAEMOS LOS DATOS DEL
 
 		// POST COMO OBJETO

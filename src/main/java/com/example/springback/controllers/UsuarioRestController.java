@@ -19,7 +19,7 @@ import com.example.springback.util.response.GenericResponse;
 import com.example.springback.util.response.Success;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/usuario")
 @CrossOrigin(origins = "*")
 public class UsuarioRestController {
 
@@ -27,7 +27,7 @@ public class UsuarioRestController {
 	private UsuarioService iusuarioservice;
 
 	// CREAR USUARIO
-	@PostMapping("/usuario")
+	@PostMapping
 	@ResponseStatus(code = HttpStatus.OK)
 	public ResponseEntity<GenericResponse<Usuario>> usuarioCreado(@RequestBody Usuario usuario) {
 
