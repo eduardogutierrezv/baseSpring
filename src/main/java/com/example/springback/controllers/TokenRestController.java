@@ -1,7 +1,6 @@
 package com.example.springback.controllers;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,20 +10,28 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.example.springback.service.TokenService;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+
 import com.example.springback.util.response.GenericResponse;
 import com.example.springback.util.response.Success;
 import com.example.springback.vo.TokenReqVO;
-
+import com.example.springback.jwtconfigure.seguridad.TokenProvider;
+import com.example.springback.service.TokenService;
 import com.example.springback.util.response.Error;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping(value = "/login")
+@RequestMapping(value = "/auth/login")
 public class TokenRestController {
 
 	@Autowired
-	private TokenService tokenService;
+	private TokenProvider tokenProvider;
+
+	@Autowired
+	private AuthenticationManager authenticationManager;
 
 	@PostMapping(value = "")
 	public ResponseEntity<GenericResponse<String>> loginPrimary(@RequestBody TokenReqVO userLogin) { // TRAEMOS LOS
@@ -34,7 +41,13 @@ public class TokenRestController {
 		ArrayList<Error> errores = new ArrayList<Error>();
 
 		try {
-			String token = tokenService.crearToken(userLogin);
+
+			Authentication authentication = authenticationManager.authenticate(
+					new UsernamePasswordAuthenticationToken(userLogin.getEmail(), userLogin.getPassword()));
+
+			SecurityContextHolder.getContext().setAuthentication(authentication);
+
+			String token = tokenProvider.createToken(authentication);
 
 			if (null == token) {
 

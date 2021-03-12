@@ -9,16 +9,19 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Component
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
+	private static final Logger logger = LoggerFactory.getLogger(JwtAuthenticationEntryPoint.class);
+
 	@Override
-	public void commence(HttpServletRequest request, HttpServletResponse response,
-			AuthenticationException authException) throws IOException, ServletException {
-
-		response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "NOAUTORIZADO");
-
+	public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
+			AuthenticationException e) throws IOException, ServletException {
+		logger.error("Responding with unauthorized error. Message - {}", e.getMessage());
+		httpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, e.getLocalizedMessage());
 	}
 
 }

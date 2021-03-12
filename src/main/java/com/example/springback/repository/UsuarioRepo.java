@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 import com.example.springback.entity.Usuario;
 
 @Repository
@@ -14,7 +16,9 @@ public interface UsuarioRepo extends JpaRepository<Usuario, Integer> {
 	@Query(value = "SELECT email, password FROM usuarios WHERE usuarios.email = ?1 AND usuarios.password = ?2", nativeQuery = true)
 	Map<String, Object> loginPrueba(String email, String password);
 
-	Usuario findByEmail(String email);
+	Optional<Usuario> findByEmail(String email);
+
+	Optional<Usuario> findById(Integer id);
 
 	/*
 	 * @Query(value = "SELECT password FROM usuarios WHERE usuarios.email = ?1",

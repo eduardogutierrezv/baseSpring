@@ -27,7 +27,7 @@ public class TokenService {
 		String password = tokenBody.getPassword(); // TRAEMOS EL PASSWORD DEL OBJETO POST
 		boolean verificador = false;// INDICAMOS QUE EL VERIFICADOR DE CONTRASEÑA VIENE FALSE
 
-		Usuario userBd = userRepo.findByEmail(email); // TRAEMOS EL PASS DE LA BASE DE DATOS
+		Usuario userBd = userRepo.findByEmail(email).orElse(null); // TRAEMOS EL PASS DE LA BASE DE DATOS
 		verificador = sPass.desencriptarPass(password, userBd.getPassword()); // COMPARAMOS LA CONTRASEÑA QUE VIENE DEL
 																				// POST CON LA
 		// BASE DE DATOS
