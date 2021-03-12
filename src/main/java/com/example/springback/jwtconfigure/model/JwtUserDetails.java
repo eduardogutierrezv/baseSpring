@@ -74,4 +74,8 @@ public class JwtUserDetails implements UserDetails {
 		return grantedAuthorities;
 	}
 
+	/**
+	*
+	*/
+	private static final long serialVersionUID = 1L;
 }

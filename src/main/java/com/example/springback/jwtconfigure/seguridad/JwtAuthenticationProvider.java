@@ -42,6 +42,7 @@ public class JwtAuthenticationProvider extends AbstractUserDetailsAuthentication
 		JwtUser jwtUser = validator.validate(token);
 
 		if (jwtUser == null) {
+
 			System.err.println(jwtUser);
 			throw new RuntimeException("JWT token es incorrecto");
 		}

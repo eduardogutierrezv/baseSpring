@@ -20,7 +20,6 @@ public class JwtAuthenticationTokenFilter extends AbstractAuthenticationProcessi
 
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
-
 			throws AuthenticationException, IOException, ServletException {
 
 		String header = request.getHeader("Authorization");
@@ -30,9 +29,11 @@ public class JwtAuthenticationTokenFilter extends AbstractAuthenticationProcessi
 					"Token de JWT Perdido " + header + " " + request.getHeaders("Authorization") + " <-- aca");
 
 		}
-		String authenticationToken = header.substring(32); // SEPARAMOS EL HEADER 32 arriba
+		String authenticationToken = header.substring(7); // SEPARAMOS EL HEADER 32 arriba
 		System.out.println(authenticationToken);
+
 		JwtAuthenticationToken token = new JwtAuthenticationToken(authenticationToken);
+
 		return getAuthenticationManager().authenticate(token);
 
 	}

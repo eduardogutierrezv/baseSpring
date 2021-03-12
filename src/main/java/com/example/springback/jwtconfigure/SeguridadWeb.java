@@ -26,6 +26,7 @@ public class SeguridadWeb extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private JwtAuthenticationProvider authenticationProvider;
+
 	@Autowired
 	private JwtAuthenticationEntryPoint authenticationEntryPoint;
 
@@ -46,7 +47,7 @@ public class SeguridadWeb extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.cors().and() // LO MAS IMPORTANTE EL CORS PARA QUE FUNCIONE
-				.csrf().disable().authorizeRequests().antMatchers("**/api/**").authenticated().and().exceptionHandling()
+				.csrf().disable().authorizeRequests().antMatchers("/api/**").authenticated().and().exceptionHandling()
 				.authenticationEntryPoint(authenticationEntryPoint).and().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		http.addFilterBefore(authenticationtokenfilter(), UsernamePasswordAuthenticationFilter.class);

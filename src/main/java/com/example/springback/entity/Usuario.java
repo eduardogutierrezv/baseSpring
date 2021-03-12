@@ -22,16 +22,23 @@ public class Usuario {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 
+	@Column(name = "nombre")
 	private String nombre;
+
+	@Column(name = "apellido")
 	private String apellido;
 
-	@Column(unique = true, nullable = false)
+	@Column(name = "email", unique = true, nullable = false)
 	private String email;
-	@Column(nullable = false)
+
+	@Column(name = "password", nullable = false)
 	private String password;
+
+	@Column(name = "edad")
 	private int edad;
 
 	@Temporal(TemporalType.DATE)
+	@Column(name = "fecha")
 	private Date fecha;
 
 }

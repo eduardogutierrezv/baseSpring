@@ -1,14 +1,14 @@
 package com.example.springback.jwtconfigure.model;
 
-import java.util.Collection;
+//import java.util.Collection;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.GrantedAuthority;
+//import org.springframework.security.core.GrantedAuthority;
 
-public class JwtAuthenticationToken extends UsernamePasswordAuthenticationToken{
-	
+public class JwtAuthenticationToken extends UsernamePasswordAuthenticationToken {
+
 	private String token;
-	
+
 	public JwtAuthenticationToken(String token) {
 		super(null, null);
 		this.token = token;
@@ -21,8 +21,8 @@ public class JwtAuthenticationToken extends UsernamePasswordAuthenticationToken{
 	public void setToken(String token) {
 		this.token = token;
 	}
-	
-	//METODOS OBTENIDOS DEL GET IMPLEMENTS
+
+	// METODOS OBTENIDOS DEL GET IMPLEMENTS
 
 	@Override
 	public Object getCredentials() {
@@ -36,5 +36,9 @@ public class JwtAuthenticationToken extends UsernamePasswordAuthenticationToken{
 		return null;
 	}
 
+	/**
+	*
+	*/
+	private static final long serialVersionUID = 1L;
 
 }

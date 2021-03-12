@@ -12,7 +12,11 @@ public class TestController {
 
     @GetMapping()
     public String HollaMundo() {
-        System.err.println("Hola");
+        try {
+            System.err.println("hola");
+        } catch (Exception e) {
+            System.err.println("hola pero malo");
+        }
         return "Hola";
 
     }
