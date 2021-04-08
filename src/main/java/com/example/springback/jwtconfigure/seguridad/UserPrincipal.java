@@ -12,6 +12,14 @@ import java.util.List;
 import java.util.Map;
 
 public class UserPrincipal implements OAuth2User, UserDetails {
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
+
+    private static final String ROLE_USER = "ROLE_USER";
+    // private static final String ROLE_ADMIN = "ROLE_ADMIN";
+
     private Integer id;
     private String email;
     private String password;
@@ -27,7 +35,7 @@ public class UserPrincipal implements OAuth2User, UserDetails {
     }
 
     public static UserPrincipal create(Usuario user) {
-        List<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
+        List<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(ROLE_USER));
 
         return new UserPrincipal(user.getId(), user.getEmail(), user.getPassword(), authorities);
     }

@@ -1,10 +1,6 @@
 package com.example.springback.controllers;
 
-import java.util.ArrayList;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,12 +11,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
-import com.example.springback.util.response.GenericResponse;
-import com.example.springback.util.response.Success;
+import com.example.springback.vo.AuthResponseVO;
 import com.example.springback.vo.TokenReqVO;
 import com.example.springback.jwtconfigure.seguridad.TokenProvider;
-import com.example.springback.service.TokenService;
-import com.example.springback.util.response.Error;
+import com.example.springback.util.ResponseRestController;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -34,11 +28,10 @@ public class TokenRestController {
 	private AuthenticationManager authenticationManager;
 
 	@PostMapping(value = "")
-	public ResponseEntity<GenericResponse<String>> loginPrimary(@RequestBody TokenReqVO userLogin) { // TRAEMOS LOS
-																										// DATOS DEL
+	public ResponseRestController<AuthResponseVO> loginPrimary(@RequestBody TokenReqVO userLogin) { // TRAEMOS LOS
 
-		GenericResponse<String> genResp = new GenericResponse<String>();
-		ArrayList<Error> errores = new ArrayList<Error>();
+		// DATOS DEL
+		ResponseRestController<AuthResponseVO> resp = new ResponseRestController<AuthResponseVO>();
 
 		try {
 
@@ -46,39 +39,29 @@ public class TokenRestController {
 					new UsernamePasswordAuthenticationToken(userLogin.getEmail(), userLogin.getPassword()));
 
 			SecurityContextHolder.getContext().setAuthentication(authentication);
+			AuthResponseVO auth = tokenProvider.createToken(authentication);
 
-			String token = tokenProvider.createToken(authentication);
+			if (null == auth) {
 
-			if (null == token) {
-
-				genResp.setSuccess(Success.NOK);
-				Error er = new Error();
-				er.setCodigo("400-1");
-				er.setDescripcion("Contraseña incorrecta");
-				errores.add(er);
-				genResp.setErrores(errores);
-
-				return new ResponseEntity<GenericResponse<String>>(genResp, null, HttpStatus.NOT_ACCEPTABLE);
+				resp.setCode(400);
+				resp.setMessage("Password Incorrecto");
 
 			}
 
-			genResp.setPayload(token);
-			genResp.setSuccess(Success.OK);
-			return new ResponseEntity<>(genResp, null, HttpStatus.OK);
+			resp.setCode(200);
+			resp.setMessage("token generado");
+			resp.setBody(auth);
+
+			return resp;
 
 		} catch (Exception e) {
+			resp.setCode(400);
+			resp.setMessage("ERROR MICROSERVICIO");
 
-			genResp.setSuccess(Success.NOK);
-			Error er = new Error();
-
-			er.setCodigo("400");
-			er.setDescripcion("ERROR");
-			errores.add(er);
-			genResp.setErrores(errores);
-
-			return new ResponseEntity<GenericResponse<String>>(genResp, null, HttpStatus.INTERNAL_SERVER_ERROR);
+			return resp;
 
 		}
 
 	}
+
 }

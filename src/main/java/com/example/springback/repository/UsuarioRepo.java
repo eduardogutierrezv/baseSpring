@@ -20,16 +20,4 @@ public interface UsuarioRepo extends JpaRepository<Usuario, Integer> {
 
 	Optional<Usuario> findById(Integer id);
 
-	/*
-	 * @Query(value = "SELECT password FROM usuarios WHERE usuarios.email = ?1",
-	 * nativeQuery = true) String soloPass(String email);
-	 * 
-	 * @Query(value =
-	 * "SELECT nombre, apellido, edad, email FROM usuarios WHERE usuarios.email = ?1"
-	 * , nativeQuery = true) Map<String, Object> buscarUsuarioEmail(String email);
-	 * 
-	 * @Query(value = "SELECT * FROM usuarios WHERE usuarios.email = ?1",
-	 * nativeQuery = true) Usuario buscarUsuarioEmailAndReturnId(String email);
-	 */
-
 }

@@ -32,7 +32,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 			throws ServletException, IOException {
 		try {
 			String jwt = getJwtFromRequest(request);
-
+			// valida token cuando entra
 			if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
 				Integer userId = tokenProvider.getUserIdFromToken(jwt);
 
@@ -46,7 +46,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 		} catch (Exception ex) {
 			logger.error("Could not set user authentication in security context", ex);
 		}
-
+		// enviamos el filtro
 		filterChain.doFilter(request, response);
 	}
 
