@@ -10,7 +10,7 @@ import org.springframework.security.core.Authentication;
 import java.util.Date;
 import java.util.Map;
 
-import com.example.springback.vo.AuthResponseVO;
+import com.example.springback.dto.AuthTokenResponse;
 
 @Service
 public class TokenProvider {
@@ -24,15 +24,13 @@ public class TokenProvider {
     @Value("${app.token.secret}")
     private String tokenSecret;
 
-    public AuthResponseVO createToken(Authentication authentication) {
+    public AuthTokenResponse createToken(Authentication authentication) {
 
         UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + this.expiracionTokenMiliSeg);
-        System.err.println(now);
-        System.err.println(expiryDate);
 
-        return new AuthResponseVO(
+        return new AuthTokenResponse(
                 Jwts.builder().setSubject(Integer.toString(userPrincipal.getId())).setIssuedAt(new Date())
                         .setExpiration(expiryDate).signWith(SignatureAlgorithm.HS512, this.tokenSecret).compact(),
                 BEARER);

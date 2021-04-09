@@ -11,8 +11,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
-import com.example.springback.vo.AuthResponseVO;
 import com.example.springback.vo.TokenReqVO;
+import com.example.springback.dto.AuthTokenResponse;
 import com.example.springback.jwtconfigure.seguridad.TokenProvider;
 import com.example.springback.util.ResponseRestController;
 
@@ -28,18 +28,22 @@ public class TokenRestController {
 	private AuthenticationManager authenticationManager;
 
 	@PostMapping(value = "")
-	public ResponseRestController<AuthResponseVO> loginPrimary(@RequestBody TokenReqVO userLogin) { // TRAEMOS LOS
+	public ResponseRestController<AuthTokenResponse> loginPrimary(@RequestBody TokenReqVO userLogin) { // TRAEMOS LOS
 
 		// DATOS DEL
-		ResponseRestController<AuthResponseVO> resp = new ResponseRestController<AuthResponseVO>();
+		ResponseRestController<AuthTokenResponse> resp = new ResponseRestController<AuthTokenResponse>();
 
 		try {
 
+			System.err.println(userLogin);
 			Authentication authentication = authenticationManager.authenticate(
 					new UsernamePasswordAuthenticationToken(userLogin.getEmail(), userLogin.getPassword()));
-
+			System.err.println(userLogin);
 			SecurityContextHolder.getContext().setAuthentication(authentication);
-			AuthResponseVO auth = tokenProvider.createToken(authentication);
+			System.err.println(authentication);
+
+			AuthTokenResponse auth = tokenProvider.createToken(authentication);
+			System.err.println(authentication);
 
 			if (null == auth) {
 
@@ -55,8 +59,8 @@ public class TokenRestController {
 			return resp;
 
 		} catch (Exception e) {
-			resp.setCode(400);
-			resp.setMessage("ERROR MICROSERVICIO");
+			resp.setCode(500);
+			resp.setMessage("ERROR MICROSERVICIO " + e);
 
 			return resp;
 

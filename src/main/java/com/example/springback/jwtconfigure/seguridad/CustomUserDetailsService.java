@@ -1,7 +1,9 @@
 package com.example.springback.jwtconfigure.seguridad;
 
-import com.example.springback.entity.Usuario;
-import com.example.springback.repository.UsuarioRepo;
+import com.example.springback.entity.tecashe.Usuario;
+//import com.example.springback.repository.backlogin.UsuarioRepo;
+import com.example.springback.repository.tecashe.UsuarioRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -13,14 +15,14 @@ import org.springframework.transaction.annotation.Transactional;
 public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
-    UsuarioRepo userRepository;
+    private UsuarioRepository userRepository;
 
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Usuario user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with email : " + email));
-
+                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado con el email : " + email));
+        // envia el error
         return UserPrincipal.create(user);
     }
 

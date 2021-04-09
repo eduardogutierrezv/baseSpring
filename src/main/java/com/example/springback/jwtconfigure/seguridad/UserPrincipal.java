@@ -1,6 +1,6 @@
 package com.example.springback.jwtconfigure.seguridad;
 
-import com.example.springback.entity.Usuario;
+//import com.example.springback.entity.backlogin.Usuario;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,6 +10,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+
+import com.example.springback.entity.tecashe.Usuario;
 
 public class UserPrincipal implements OAuth2User, UserDetails {
     /**
@@ -37,7 +39,7 @@ public class UserPrincipal implements OAuth2User, UserDetails {
     public static UserPrincipal create(Usuario user) {
         List<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(ROLE_USER));
 
-        return new UserPrincipal(user.getId(), user.getEmail(), user.getPassword(), authorities);
+        return new UserPrincipal(user.getIdUsuario(), user.getEmail(), user.getPassword(), authorities);
     }
 
     public static UserPrincipal create(Usuario user, Map<String, Object> attributes) {
