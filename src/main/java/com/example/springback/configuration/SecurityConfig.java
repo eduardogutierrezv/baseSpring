@@ -62,7 +62,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticationEntryPoint(new JwtAuthenticationEntryPoint()).and().authorizeRequests()
                 .antMatchers("/", "/error", "/favicon.ico", "/**/*.png", "/**/*.gif", "/**/*.svg", "/**/*.jpg",
                         "/**/*.html", "/**/*.css", "/**/*.js")
-                .permitAll().antMatchers("/auth/**", "/oauth2/**", "/free/**").permitAll().anyRequest().authenticated();
+                .permitAll().antMatchers("/auth/**", "/public/**", "/free/**").permitAll().anyRequest().authenticated();
 
         // Add our custom Token based authentication filter
         http.addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);

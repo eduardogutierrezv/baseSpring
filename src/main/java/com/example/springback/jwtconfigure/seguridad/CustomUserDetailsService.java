@@ -1,7 +1,6 @@
 package com.example.springback.jwtconfigure.seguridad;
 
 import com.example.springback.entity.tecashe.Usuario;
-//import com.example.springback.repository.backlogin.UsuarioRepo;
 import com.example.springback.repository.tecashe.UsuarioRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;

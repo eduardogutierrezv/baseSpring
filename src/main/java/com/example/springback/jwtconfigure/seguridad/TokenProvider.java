@@ -11,6 +11,8 @@ import java.util.Date;
 import java.util.Map;
 
 import com.example.springback.dto.AuthTokenResponse;
+import com.example.springback.util.CodeResponse;
+import com.example.springback.util.ResponseRestController;
 
 @Service
 public class TokenProvider {
@@ -24,16 +26,33 @@ public class TokenProvider {
     @Value("${app.token.secret}")
     private String tokenSecret;
 
-    public AuthTokenResponse createToken(Authentication authentication) {
+    public ResponseRestController<AuthTokenResponse> createToken(Authentication authentication) {
 
         UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + this.expiracionTokenMiliSeg);
+        ResponseRestController<AuthTokenResponse> resp = new ResponseRestController<AuthTokenResponse>();
 
-        return new AuthTokenResponse(
-                Jwts.builder().setSubject(Integer.toString(userPrincipal.getId())).setIssuedAt(new Date())
-                        .setExpiration(expiryDate).signWith(SignatureAlgorithm.HS512, this.tokenSecret).compact(),
-                BEARER);
+        try {
+            if (null == userPrincipal) {
+
+                resp.setCode(CodeResponse.ERROR);
+                resp.setMessage("Password Incorrecto");
+
+            } else {
+                resp.setCode(CodeResponse.SUCCESS);
+                resp.setMessage("token generado");
+                resp.setBody(new AuthTokenResponse(Jwts.builder().setSubject(Integer.toString(userPrincipal.getId()))
+                        .setIssuedAt(new Date()).setExpiration(expiryDate)
+                        .signWith(SignatureAlgorithm.HS512, this.tokenSecret).compact(), BEARER));
+            }
+        } catch (Exception e) {
+
+            resp.setCode(CodeResponse.ERROR_SERVIDOR);
+            resp.setMessage("error en el microservicio " + e);
+        }
+
+        return resp;
 
     }
 

@@ -14,6 +14,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import com.example.springback.vo.TokenReqVO;
 import com.example.springback.dto.AuthTokenResponse;
 import com.example.springback.jwtconfigure.seguridad.TokenProvider;
+import com.example.springback.util.CodeResponse;
 import com.example.springback.util.ResponseRestController;
 
 @CrossOrigin(origins = "*")
@@ -35,31 +36,16 @@ public class TokenRestController {
 
 		try {
 
-			System.err.println(userLogin);
 			Authentication authentication = authenticationManager.authenticate(
 					new UsernamePasswordAuthenticationToken(userLogin.getEmail(), userLogin.getPassword()));
-			System.err.println(userLogin);
+
 			SecurityContextHolder.getContext().setAuthentication(authentication);
-			System.err.println(authentication);
-
-			AuthTokenResponse auth = tokenProvider.createToken(authentication);
-			System.err.println(authentication);
-
-			if (null == auth) {
-
-				resp.setCode(400);
-				resp.setMessage("Password Incorrecto");
-
-			}
-
-			resp.setCode(200);
-			resp.setMessage("token generado");
-			resp.setBody(auth);
+			resp = tokenProvider.createToken(authentication);
 
 			return resp;
 
 		} catch (Exception e) {
-			resp.setCode(500);
+			resp.setCode(CodeResponse.ERROR_SERVIDOR);
 			resp.setMessage("ERROR MICROSERVICIO " + e);
 
 			return resp;
